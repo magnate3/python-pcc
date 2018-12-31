@@ -21,6 +21,7 @@ def ssocket():
     serv.port = 55384
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((serv.ip, serv.port))
     s.listen(5)
     ret = ''
@@ -29,10 +30,10 @@ def ssocket():
         while True:
             data = conn.recv(BUFSIZE)
             if not data:
-                return json.loads(ret)
+                pcc_iproute2.ip_route(json.loads(segment_lists))
                 break
             ret += data
         conn.close()
     s.close()
 
-    return json.loads(ret)
+    return

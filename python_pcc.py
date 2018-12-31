@@ -28,7 +28,6 @@ def sl_socket():
     '''socket of segmentlist'''
 
     segment_lists = pcc_segmentlist.ssocket()
-    pcc_iproute2.ip_route(segment_lists)
 
     return
 
