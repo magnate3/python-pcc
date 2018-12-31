@@ -6,7 +6,7 @@ import yaml
 from collections import OrderedDict
 
 
-def priprosessor(out):
+def priprosessor(raw_ls):
     '''shaping LSDB'''
 
     s1 = re.sub(r'\s*OSPF Router with ID \(.*\)', '', out)
@@ -30,9 +30,9 @@ def priprosessor(out):
     s19 = re.sub('\n(.*?) =', '\n\t\\1:', s18)
     s20 = re.sub('(Segment Routing MSD TLV)', '\n\\1', s19)
     s21 = re.sub('\n\n', '', s20, 1)
-    fixed_out = '---\n' + s21
+    fixed_ls = '---\n' + s21
 
-    return fixed_out
+    return fixed_ls
 
 
 def yaml_encoder(data):
@@ -45,13 +45,13 @@ def yaml_encoder(data):
     return encoded_yaml
 
 
-def parse(out):
+def parse_ls(raw_ls):
     '''encode LSDB to list'''
     # ordered dictionary
     yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
                          lambda loader, node: OrderedDict(loader.construct_pairs(node)))
 
-    fixed_out = priprosessor(out)
-    lsdb = yaml.load(yaml_encoder(fixed_out))
+    fixed_ls = priprosessor(raw_ls)
+    parsed_ls = yaml.load(yaml_encoder(fixed_ls))
 
-    return lsdb
+    return parsed_ls

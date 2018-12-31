@@ -2,9 +2,9 @@
 # -*- coding:utf-8 -*-
 
 import time
-import subprocess
 import threading
-import frr_parser
+import get_linkstate
+import parse_linkstate
 import linkstate_sockcli
 import segmentlist_socksrv
 
@@ -13,11 +13,9 @@ def ls_socket():
     '''socket of linkstate'''
 
     while True:
-        cmd = 'sudo vtysh -c "show ip ospf database opaque-area"'
-        opaque_area = subprocess.check_output(cmd, shell=True)
-
-        linkstate = frr_parser.parse(opaque_area)
-        linkstate_sockcli.lsocket(linkstate)
+        raw_ls = get_linkstate.get_ls()
+        parsed_ls = parse_linkstate.parse_ls(raw_ls)
+        linkstate_sockcli.lsocket(parsed_ls)
         time.sleep(1)
 
     return
