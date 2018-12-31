@@ -7,9 +7,9 @@ from collections import OrderedDict
 
 
 def priprosessor(raw_ls):
-    '''shaping LSDB'''
+    '''shaping linkstate'''
 
-    s1 = re.sub(r'\s*OSPF Router with ID \(.*\)', '', out)
+    s1 = re.sub(r'\s*OSPF Router with ID \(.*\)', '', raw_ls)
     s2 = re.sub(r'\s*Area-Local Opaque-LSA \(Area.*', '', s1)
     s3 = s2.replace('  Opaque-Type ', '\n  Opaque-Type: ')
     s4 = s3.replace('Opaque-ID  ', 'Opaque-ID:')
@@ -36,7 +36,7 @@ def priprosessor(raw_ls):
 
 
 def yaml_encoder(data):
-    '''encode LSDB to YAML'''
+    '''encode linkstate to YAML'''
 
     s1 = data.replace('\n', '\n  ')
     s2 = s1.replace('  LS age', '- LS age')
@@ -46,7 +46,7 @@ def yaml_encoder(data):
 
 
 def parse_ls(raw_ls):
-    '''encode LSDB to list'''
+    '''encode raw linkstate to list'''
     # ordered dictionary
     yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
                          lambda loader, node: OrderedDict(loader.construct_pairs(node)))
