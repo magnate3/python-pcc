@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import socket
+import json
 
 
 class ServAttr:
@@ -19,7 +20,7 @@ def lsocket(link_state):
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((serv.ip, serv.port))
-    s.send(link_state)
+    s.send(json.dumps(link_state))
     s.close()
 
     return

@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 
 import re
-import json
 import yaml
 from collections import OrderedDict
 
@@ -41,18 +40,18 @@ def yaml_encoder(data):
 
     s1 = data.replace('\n', '\n  ')
     s2 = s1.replace('  LS age', '- LS age')
-    s3 = s2.replace('\t', '  - ')
+    encoded_yaml = s2.replace('\t', '  - ')
 
-    return s3
+    return encoded_yaml
 
 
 def parse(out):
-    '''encode LSDB to JSON'''
+    '''encode LSDB to list'''
     # ordered dictionary
     yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
                          lambda loader, node: OrderedDict(loader.construct_pairs(node)))
 
     fixed_out = priprosessor(out)
-    yaml_data = yaml.load(yaml_encoder(fixed_out))
+    lsdb = yaml.load(yaml_encoder(fixed_out))
 
-    return json.dumps(yaml_data, indent=2)
+    return lsdb

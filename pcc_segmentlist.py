@@ -29,10 +29,10 @@ def ssocket():
         while True:
             data = conn.recv(BUFSIZE)
             if not data:
-    		return json.loads(ret)
+                return json.loads(ret)
                 break
             ret += data
         conn.close()
     s.close()
 
-    return json.loads(ret) 
+    return json.loads(ret)
