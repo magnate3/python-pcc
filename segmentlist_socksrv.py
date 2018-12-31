@@ -25,7 +25,7 @@ def ssocket():
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((serv.ip, serv.port))
     s.listen(5)
-    ret = ''
+    segment_lists = ''
     while True:
         (conn, addr) = s.accept()
         while True:
@@ -33,7 +33,7 @@ def ssocket():
             if not data:
                 iproute2_apply.ip_route(json.loads(segment_lists))
                 break
-            ret += data
+            segment_lists += data
         conn.close()
     s.close()
 
