@@ -3,6 +3,7 @@
 
 import socket
 import json
+import iproute2_apply
 
 BUFSIZE = 4096
 
@@ -30,7 +31,7 @@ def ssocket():
         while True:
             data = conn.recv(BUFSIZE)
             if not data:
-                pcc_iproute2.ip_route(json.loads(segment_lists))
+                iproute2_apply.ip_route(json.loads(segment_lists))
                 break
             ret += data
         conn.close()

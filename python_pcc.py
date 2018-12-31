@@ -5,9 +5,8 @@ import time
 import subprocess
 import threading
 import frr_parser
-import pcc_linkstate
-import pcc_segmentlist
-import pcc_iproute2
+import linkstate_sockcli
+import segmentlist_socksrv
 
 
 def ls_socket():
@@ -18,7 +17,7 @@ def ls_socket():
         opaque_area = subprocess.check_output(cmd, shell=True)
 
         linkstate = frr_parser.parse(opaque_area)
-        pcc_linkstate.lsocket(linkstate)
+        linkstate_sockcli.lsocket(linkstate)
         time.sleep(1)
 
     return
@@ -27,7 +26,7 @@ def ls_socket():
 def sl_socket():
     '''socket of segmentlist'''
 
-    segment_lists = pcc_segmentlist.ssocket()
+    segment_lists = segmentlist_socksrv.ssocket()
 
     return
 
