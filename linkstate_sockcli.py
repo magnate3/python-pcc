@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import socket
-import json
+import pickle 
 
 
 class ServAttr:
@@ -12,7 +12,7 @@ class ServAttr:
 
 
 def lsocket(link_state):
-    '''socket of linkstate'''
+    '''Socket of linkstate'''
 
     serv = ServAttr()
     serv.ip = '172.16.1.254'
@@ -20,7 +20,7 @@ def lsocket(link_state):
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((serv.ip, serv.port))
-    s.send(json.dumps(link_state))
+    s.send(pickle.dumps(link_state))
     s.close()
 
     return

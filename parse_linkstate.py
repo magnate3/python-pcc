@@ -8,8 +8,8 @@ from collections import OrderedDict
 
 def priprosessor(raw_ls):
     '''shaping linkstate'''
-
-    s1 = re.sub(r'\s*OSPF Router with ID \(.*\)', '', raw_ls)
+  
+    s1 = re.sub(r'\s*OSPF Router with ID \(.*\)', '', raw_ls.decode('utf-8'))
     s2 = re.sub(r'\s*Area-Local Opaque-LSA \(Area.*', '', s1)
     s3 = s2.replace('  Opaque-Type ', '\n  Opaque-Type: ')
     s4 = s3.replace('Opaque-ID  ', 'Opaque-ID:')
