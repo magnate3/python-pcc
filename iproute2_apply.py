@@ -4,13 +4,13 @@
 import subprocess
 
 
-def ip_route(segment_lists):
-    '''add static route'''
+def ip_route(sl_info):
+    '''Add static route with iproute2'''
 
-    delcmd = 'sudo ip route del ' + segment_lists['dst']
+    delcmd = 'sudo ip route del ' + sl_info['dst']
     subprocess.call(delcmd, shell=True)
     addcmd = 'sudo ip route add ' + \
-        segment_lists['dst'] + ' encap mpls ' + \
-        segment_lists['segment_list'] + ' via ' + segment_lists['nexthop']
+        sl_info['dst'] + ' encap mpls ' + \
+        sl_info['segmentlist'] + ' via ' + sl_info['nexthop']
     subprocess.call(addcmd, shell=True)
     return
